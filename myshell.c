@@ -20,9 +20,23 @@
 // Put global environment variables here
 
 // Define functions declared in myshell.h here
+char tokenize(char *a){
+    const char s[2] = "-";
+    char *token;
+    token = strtok(a, s);
+
+    while(token != NULL){
+        printf("%s\n,token");
+        token = strtok(NULL, s);
+    }
+    return token;
+}
+
+
 
 int main(int argc, char *argv[])
 {
+    
     // Input buffer and and commands
     char buffer[BUFFER_LEN] = { 0 };
     char command[BUFFER_LEN] = { 0 };
@@ -32,8 +46,17 @@ int main(int argc, char *argv[])
 
     // Perform an infinite loop getting command input from users
     while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
-    {
+    {   
+        
         // Perform string tokenization to get the command and argument
+        char *token;
+        token = strtok(buffer, "\n");
+        printf(" This is token %s\n",token);
+        for(int i = 0; token[i] != '\0'; i++){
+            command[i] = token[i];
+        }
+
+        
 
         // Check the command and execute the operations for each command
         // cd command -- change the current directory
@@ -48,6 +71,18 @@ int main(int argc, char *argv[])
         else if (strcmp(command, "quit") == 0)
         {
             return EXIT_SUCCESS;
+        }
+
+        else if (strcmp(command, "help") == 0){
+            char c;
+            FILE *file;
+            file = fopen("README.md", "r");
+            if (file) {
+            while ((c = getc(file)) != EOF){
+                putchar(c);
+            }
+            fclose(file);
+}
         }
 
         // Unsupported command
