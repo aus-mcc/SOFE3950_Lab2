@@ -34,7 +34,7 @@
         }
 
         // Dir command 
-        void com_dir(a){
+        void com_dir(char a[]){
             
             char sys_call[sizeof(a)+5];
             strcpy(sys_call, "ls \"");
@@ -45,9 +45,11 @@
 
         // Environ command
         void com_environ(void){
-            extern char **envp;
-            while(envp != NULL){
-                printf("%s\n", *envp++);
+            extern char **envi;
+            int i = 0;
+            while(envi[i] != NULL){
+                printf("%s\n", envi[i]);
+                i++;
             }
         }
 
@@ -61,12 +63,6 @@
             printf("Hit the 'enter' key to resume");
             getchar(); 
         }
-
-        /* quit command -- exit the shell
-        else if (strcmp(command, "quit") == 0)
-        {
-            return EXIT_SUCCESS;
-        }*/
 
         // Help Command
         void com_help(void){

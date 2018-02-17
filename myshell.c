@@ -108,44 +108,21 @@ int main(int argc, char *argv[], char *envp[])
     char command[BUFFER_LEN] = { 0 };
     char arg[BUFFER_LEN] = { 0 };
 
-    getcwd(PATH, sizeof(PATH));
-
-    // Parse the commands provided using argc and argv
-    printf("%s %s", PATH, PROMPT);
-    int counter = argc;
-    // Perform an infinite loop getting command input from users
-    while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
-    {   
-        
-        // Perform string tokenization to get the command and argument
-       
-        size_t ln = strlen(arg) - 1;
-		if (*arg && arg[ln] == '\n') 
-			arg[ln] = '\0';
-
-      
-
-        // Check the command and execute the operations for each command
-        
-       
-        
-
-    
-
-       
-
-        
-
-        
-
-      
-
-    
-       
-        printf("%s %s", PATH, PROMPT);
-        counter--;
-
+    if(argc ==2){
+        file_based(argv[1]);
     }
-    return EXIT_SUCCESS;
+    else{
+
+        getcwd(PATH, sizeof(PATH));
+        printf("%s %s", PATH, PROMPT);
+    
+        // Perform an infinite loop getting command input from users
+        while (fgets(buffer, BUFFER_LEN, stdin) != NULL){
+            tokenization(buffer, command, arg);   
+            executables(command, arg);
+            printf("%s %s", PATH, PROMPT);
+        }
+        return EXIT_SUCCESS;
+    }
 }
 
