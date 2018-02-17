@@ -25,7 +25,7 @@
         void cmd_cd(char *PATH)
         {
             getcwd(PATH, sizeof(PATH));
-            printf("The current work directory is: %s\n", PATH);
+            fprintf(stdout,"The current work directory is: %s\n", PATH);
         }
 
         // Clr command
@@ -42,7 +42,7 @@
 
             if(de){
                 while((dir = readdir(de)) != NULL){
-                    printf(RED "[%s]\n" RESET, dir->d_name);
+                    fprintf(stdout, RED "[%s]\n" RESET, dir->d_name);
                 }
                 
                 closedir(de);
@@ -54,20 +54,20 @@
             extern char **environ;
             int i = 0;
             while(environ[i] != NULL){
-                printf("%s\n", environ[i]);
+                fprintf(stdout, "%s\n", environ[i]);
                 i++;
             }
         }
 
         // Echo command
         void cmd_echo(char *a){
-            printf("\n");
-            printf(BLU "%s\n" RESET, a);
+            fprintf(stdout, "\n");
+            fprintf(stdout, BLU "%s\n" RESET, a);
         }
 
         // Pause command
         void cmd_pause(void){
-            printf("Hit the 'enter' key to resume");
+            fprintf(stdout, "Hit the 'enter' key to resume");
             getchar(); 
         }
 
@@ -78,7 +78,7 @@
             file = fopen("README.md", "r");
             if (file) {
                 while ((c = getc(file)) != EOF){
-                    printf(BLU  "%c" RESET , c);
+                    fprintf(stdout, BLU  "%c" RESET , c);
                 }
             fclose(file);
             }

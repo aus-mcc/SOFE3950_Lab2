@@ -92,7 +92,7 @@ void executables(char *command, char *arg){
     }
 }
 
-void file_based(char *arg){
+char file_based(char *arg, int count, char *output){
     char file_command[BUFFER_LEN] = {0};
     char file_arg[BUFFER_LEN] = {0};
 
@@ -101,20 +101,39 @@ void file_based(char *arg){
     char ln[BUFFER_LEN];
 
     bat = fopen(arg, "r");
-
-    if(bat == NULL){
-        printf("Could not read file");
-    }
-    else{
-        fgets(ln, BUFFER_LEN, bat); // skip the file header
-        while(fgets(ln, BUFFER_LEN, bat)){
-            tokenization(ln, file_command, file_arg);
-            executables(file_command, file_arg);
-            buffer[0] = '\0';
-            command[0] = '\0';
-            arg[0] = '\0';
+    if(count==2){
+        if(bat == NULL){
+            printf("Could not read file");
         }
-        fclose(bat);
+        else{
+            fgets(ln, BUFFER_LEN, bat); // skip the file header
+            while(fgets(ln, BUFFER_LEN, bat)){
+                tokenization(ln, file_command, file_arg);
+                executables(file_command, file_arg);
+                ln[0] = '\0';
+                file_command[0] = '\0';
+                file_arg[0] = '\0';
+            }
+            fclose(bat);
+        }
+    }
+    if(count==4){
+        if(bat == NULL){
+            printf("Could not read file");
+        }
+         else{
+            
+            fgets(ln, BUFFER_LEN, bat); // skip the file header
+            while(fgets(ln, BUFFER_LEN, bat)){
+                tokenization(ln, file_command, file_arg);
+                executables(file_command, file_arg);
+                ln[0] = '\0';
+                file_command[0] = '\0';
+                file_arg[0] = '\0';
+            }
+            fclose(bat);
+        }
+
     }
 }
 
@@ -128,7 +147,24 @@ int main(int argc, char *argv[], char *envp[])
     char arg[BUFFER_LEN] = { 0 };
 
     if(argc ==2){
-        file_based(argv[1]);
+        file_based(argv[1],argc, NULL);
+    }
+    else if(argc == 4){
+        FILE *out;
+        if(strcmp(argv[1],">") == 0){
+            out = fopen(argv[3] , "w");
+        }
+        else if(strcmp(argv[1],">>") == 0){
+            out =fopen(argv[3], "a");
+        }
+        else{
+            printf("Invalid redirection operator.");
+        }
+        
+        fflush(stdout);
+
+
+        
     }
     else{
 
