@@ -59,7 +59,7 @@ void tokenization(char *buffer, char *command, char *arg){
 
 void executables(char *command, char *arg){
     if(strcmp(command, "cd") == 0){
-        cmd_cd(arg);
+        cmd_cd(PATH,arg);
         printf("\n");
     }
     else if(strcmp(command, "clr") == 0){

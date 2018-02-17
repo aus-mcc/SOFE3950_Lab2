@@ -22,10 +22,24 @@
 #define BLU   "\x1B[34m"
 
  // cd command -- change the current directory ***
-        void cmd_cd(char *PATH)
+        void cmd_cd(char *PATH, char *arg)
         {
-            getcwd(PATH, sizeof(PATH));
-            fprintf(stdout,"The current work directory is: %s\n", PATH);
+             
+            if (strcmp(arg, "")!= 0){
+                getcwd(PATH, sizeof(PATH));
+                printf("The current work directory is: %s\n", PATH);
+                setenv("NWD", arg, 100);
+                if(chdir(getenv("NWD"))!= 0){
+                      printf("%s", getenv("NWD"));        
+                }
+                else{
+                 printf("Changing system directory error.");
+                }
+            }
+            else{
+                printf("Nothing found after cd command");      
+            }
+        
         }
 
         // Clr command

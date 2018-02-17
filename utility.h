@@ -14,7 +14,7 @@
 // extern keyword such as in the following example:
 // extern void display_help(void);
 
-extern void cmd_cd(char *PATH);
+extern void cmd_cd(char *PATH, char *arg);
 extern void cmd_clr(void);
 extern void cmd_dir(void);
 extern void cmd_environ(void);
