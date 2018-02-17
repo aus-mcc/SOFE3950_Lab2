@@ -12,4 +12,13 @@
 // extern keyword such as in the following example:
 // extern void display_help(void);
 
+extern void com_cd(char *PATH);
+extern void com_clr(void);
+extern void com_dir(a);
+extern void com_environ(void);
+extern void com_echo(char *arg);
+extern void com_pause(void);
+extern void com_help(void);
+
+
 #endif /* UTILITY_H_ */
