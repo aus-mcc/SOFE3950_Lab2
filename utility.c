@@ -47,7 +47,6 @@
                 
                 closedir(de);
             }
-            printf("\n");
         }
 
         // Environ command
@@ -61,8 +60,9 @@
         }
 
         // Echo command
-        void cmd_echo(char *arg){
-            printf(BLU "%s\n" RESET, arg);
+        void cmd_echo(char *a){
+            printf("\n");
+            printf(BLU "%s\n" RESET, a);
         }
 
         // Pause command

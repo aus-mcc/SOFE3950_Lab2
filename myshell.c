@@ -2,6 +2,10 @@
  * MyShell Project for SOFE 3950U / CSCI 3020U: Operating Systems
  *
  * Copyright (C) 2017, <GROUP MEMBERS>
+ * Austin McCulloch 100588856
+ * Prasheel Bhagalia 100587586
+ * Steven Pavlatos
+ * Frobisher Moses
  * All rights reserved.
  * 
  */
@@ -25,6 +29,9 @@
 // Put global environment variables here
 const char PROMPT[] = GRN ">>"RESET;
 char PATH[BUFFER_LEN];
+char buffer[BUFFER_LEN] = { 0 };
+char command[BUFFER_LEN] = { 0 };
+char arg[BUFFER_LEN] = { 0 };
 
 // Define functions declared in myshell.h here
 
@@ -103,6 +110,9 @@ void file_based(char *arg){
         while(fgets(ln, BUFFER_LEN, bat)){
             tokenization(ln, file_command, file_arg);
             executables(file_command, file_arg);
+            buffer[0] = '\0';
+            command[0] = '\0';
+            arg[0] = '\0';
         }
         fclose(bat);
     }
