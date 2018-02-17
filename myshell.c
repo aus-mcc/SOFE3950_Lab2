@@ -29,43 +29,55 @@ char PATH[BUFFER_LEN];
 // Define functions declared in myshell.h here
 
 void tokenization(char *buffer, char *command, char *arg){
-    char *token;
-    token = strtok(buffer, " \n");
-    printf("You entered: " GRN "%s" RESET"\n", token);
-    int n = 0;
-    while(token){
-        if(n==0){
-            strcpy(command, token);
-        }
-        else{
-            strcpy(arg, token);
-        }
-        n++;
+    char *m = strstr(buffer, "\n");
+    if(m != NULL){
+        *m = 0;
+    }
+    if(m == buffer){
+        return;
+    }
+    char *token = strtok(buffer, " ");
+    strncpy(command, token, BUFFER_LEN);
+    token = strtok(NULL, " ");
+
+    while(token != NULL)
+    {
+        strcat(arg, token);
         token = strtok(NULL, " ");
+        if(token != NULL){
+            strcat(arg, " ");
+        }
     }
 }
 
 void executables(char *command, char *arg){
     if(strcmp(command, "cd") == 0){
         cmd_cd(arg);
+        printf("\n");
     }
     else if(strcmp(command, "clr") == 0){
         cmd_clr();
+        printf("\n");
     }
     else if(strcmp(command, "dir") == 0){
-        cmd_dir(arg);
+        cmd_dir();
+        printf("\n");
     }
     else if(strcmp(command, "environ") == 0){
         cmd_environ();
+        printf("\n");
     }
     else if(strcmp(command, "echo") == 0){
         cmd_echo(arg);
+        printf("\n");
     }
     else if(strcmp(command, "pause") == 0){
         cmd_pause();
+        printf("\n");
     }
     else if(strcmp(command, "help") == 0){
         cmd_help();
+        printf("\n");
     }
    
     else{ 
@@ -87,13 +99,9 @@ void file_based(char *arg){
         printf("Could not read file");
     }
     else{
+        fgets(ln, BUFFER_LEN, bat); // skip the file header
         while(fgets(ln, BUFFER_LEN, bat)){
             tokenization(ln, file_command, file_arg);
-
-            size_t ln = strlen(arg) - 1;
-		    if (*arg && arg[ln] == '\n') 
-			arg[ln] = '\0'; 
-            
             executables(file_command, file_arg);
         }
         fclose(bat);
@@ -120,9 +128,7 @@ int main(int argc, char *argv[], char *envp[])
         // Perform an infinite loop getting command input from users
         while (fgets(buffer, BUFFER_LEN, stdin) != NULL){
             tokenization(buffer, command, arg);
-            size_t ln = strlen(arg) - 1;
-		    if (*arg && arg[ln] == '\n') 
-			arg[ln] = '\0'; 
+           
            
 
             if (strcmp(command, "quit") == 0){
@@ -130,6 +136,9 @@ int main(int argc, char *argv[], char *envp[])
             }  
             else{
                 executables(command, arg);
+                buffer[0] = '\0';
+                command[0] = '\0';
+                arg[0] = '\0';
             }
             printf("%s %s", PATH, PROMPT);
         }

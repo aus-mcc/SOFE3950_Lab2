@@ -16,7 +16,7 @@
 
 extern void cmd_cd(char *PATH);
 extern void cmd_clr(void);
-extern void cmd_dir(char a[]);
+extern void cmd_dir(void);
 extern void cmd_environ(void);
 extern void cmd_echo(char *arg);
 extern void cmd_pause(void);

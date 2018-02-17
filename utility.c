@@ -34,13 +34,20 @@
         }
 
         // Dir command 
-        void cmd_dir(char a[]){
-            
-            char sys_call[sizeof(a)+5];
-            strcpy(sys_call, "ls \"");
-            strcat(sys_call, a);
-            strcat(sys_call, "\"");
-            system(sys_call);
+        void cmd_dir(void){
+            DIR *de;
+            struct dirent *dir;
+
+            de = opendir(".");
+
+            if(de){
+                while((dir = readdir(de)) != NULL){
+                    printf(RED "[%s]\n" RESET, dir->d_name);
+                }
+                
+                closedir(de);
+            }
+            printf("\n");
         }
 
         // Environ command
