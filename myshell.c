@@ -47,31 +47,27 @@ void tokenization(char *buffer, char *command, char *arg){
 
 void executables(char *command, char *arg){
     if(strcmp(command, "cd") == 0){
-        com_cd(arg);
+        cmd_cd(arg);
     }
     else if(strcmp(command, "clr") == 0){
-        com_clr();
+        cmd_clr();
     }
     else if(strcmp(command, "dir") == 0){
-        com_dir(arg);
+        cmd_dir(arg);
     }
     else if(strcmp(command, "environ") == 0){
-        com_environ();
+        cmd_environ();
     }
     else if(strcmp(command, "echo") == 0){
-        com_echo(arg);
+        cmd_echo(arg);
     }
     else if(strcmp(command, "pause") == 0){
-        com_pause();
+        cmd_pause();
     }
     else if(strcmp(command, "help") == 0){
-        com_help();
+        cmd_help();
     }
-    // quit command -- exit the shell
-    else if (strcmp(command, "quit") == 0)
-    {
-        return EXIT_SUCCESS;
-    }
+   
     else{ 
         fputs(RED "Unsupported command, use help to display the manual\n" RESET, stderr);
     }
@@ -93,6 +89,11 @@ void file_based(char *arg){
     else{
         while(fgets(ln, BUFFER_LEN, bat)){
             tokenization(ln, file_command, file_arg);
+
+            size_t ln = strlen(arg) - 1;
+		    if (*arg && arg[ln] == '\n') 
+			arg[ln] = '\0'; 
+            
             executables(file_command, file_arg);
         }
         fclose(bat);
@@ -118,8 +119,18 @@ int main(int argc, char *argv[], char *envp[])
     
         // Perform an infinite loop getting command input from users
         while (fgets(buffer, BUFFER_LEN, stdin) != NULL){
-            tokenization(buffer, command, arg);   
-            executables(command, arg);
+            tokenization(buffer, command, arg);
+            size_t ln = strlen(arg) - 1;
+		    if (*arg && arg[ln] == '\n') 
+			arg[ln] = '\0'; 
+           
+
+            if (strcmp(command, "quit") == 0){
+                    return EXIT_SUCCESS;
+            }  
+            else{
+                executables(command, arg);
+            }
             printf("%s %s", PATH, PROMPT);
         }
         return EXIT_SUCCESS;

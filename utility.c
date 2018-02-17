@@ -22,19 +22,19 @@
 #define BLU   "\x1B[34m"
 
  // cd command -- change the current directory ***
-        void com_cd(char *PATH)
+        void cmd_cd(char *PATH)
         {
             getcwd(PATH, sizeof(PATH));
             printf("The current work directory is: %s\n", PATH);
         }
 
         // Clr command
-        void com_clr(void){
+        void cmd_clr(void){
             system("clear");
         }
 
         // Dir command 
-        void com_dir(char a[]){
+        void cmd_dir(char a[]){
             
             char sys_call[sizeof(a)+5];
             strcpy(sys_call, "ls \"");
@@ -44,28 +44,28 @@
         }
 
         // Environ command
-        void com_environ(void){
-            extern char **envi;
+        void cmd_environ(void){
+            extern char **environ;
             int i = 0;
-            while(envi[i] != NULL){
-                printf("%s\n", envi[i]);
+            while(environ[i] != NULL){
+                printf("%s\n", environ[i]);
                 i++;
             }
         }
 
         // Echo command
-        void com_echo(char *arg){
+        void cmd_echo(char *arg){
             printf(BLU "%s\n" RESET, arg);
         }
 
         // Pause command
-        void com_pause(void){
+        void cmd_pause(void){
             printf("Hit the 'enter' key to resume");
             getchar(); 
         }
 
         // Help Command
-        void com_help(void){
+        void cmd_help(void){
             char c;
             FILE *file;
             file = fopen("README.md", "r");
